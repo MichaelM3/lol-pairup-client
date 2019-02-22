@@ -6,7 +6,7 @@ export default class ChatRoomContainer extends Component {
   render() {
     return (
       <>
-
+        <ChatRoom />
       </>
     )
   }

@@ -8,7 +8,9 @@ export default class Nav extends Component {
   render() {
     return (
       <>
-
+        <LogIn />
+        <SignUp />
+        <UserProfile />
       </>
     )
   }
