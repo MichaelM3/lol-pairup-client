@@ -8,7 +8,9 @@ export default function chatroomReducer (
 ) {
 	switch (action.type) {
     case 'ALL_CHATROOMS':
-      return ({ chatrooms: state.chatrooms })
+      return ({ chatrooms: action.payload })
+		case 'SELECTED_CHATROOM':
+			return ({ selectedChatroom: action.payload })
     default:
       return state
   }

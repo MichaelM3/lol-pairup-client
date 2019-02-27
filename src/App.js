@@ -8,6 +8,7 @@ import { login, logout } from './actions/userActions'
 import SignUp from './components/SignUp';
 import LogIn from './components/LogIn';
 import UserProfile from './components/UserProfile'
+import ChatroomShow from './components/ChatroomShow'
 
 class App extends Component {
 
@@ -28,7 +29,7 @@ class App extends Component {
         }
       })
       .then(res => res.json())
-      .then((response) => {
+      .then(response => {
         this.props.login(response)
       })
     }
@@ -57,7 +58,8 @@ class App extends Component {
       body: JSON.stringify({
         user: {
           username: this.state.signUpFormName,
-          password: this.state.signUpFormPassword
+          password: this.state.signUpFormPassword,
+          league_account: this.state.signUpFormSummonerName
         }
       })
     })
@@ -93,7 +95,7 @@ class App extends Component {
       } else {
         localStorage.setItem("token", response.token)
         this.props.login(response.user)
-        this.props.history.push(`/users/${response.user.id}`)
+        this.props.history.push(`/users/${response.user.username}`)
       }
     })
   }
@@ -104,10 +106,18 @@ class App extends Component {
         <Nav currentUser={this.props.currentUser} logout={this.logout}/>
         <Switch>
           <Route
-            path="/users/:id"
-            render={(routerProps) => <UserProfile
-              currentUser={this.props.currentUser}
+            exact path="/chatrooms"
+            component={ChatRoomContainer}
+          />
+          <Route
+            exact path="/chatrooms/:id"
+            render={(routerProps) => <ChatroomShow
+              selectedChatroom={this.props.selectedChatroom}
             />}
+          />
+          <Route
+            exact path="/users"
+            component={UserContainer}
           />
           <Route
             path="/login"
@@ -135,7 +145,8 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    currentUser: state.user.currentUser
+    currentUser: state.user.currentUser,
+    selectedChatroom: state.chatroom.selectedChatroom
   }
 }
 

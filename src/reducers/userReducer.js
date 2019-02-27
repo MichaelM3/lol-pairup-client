@@ -1,6 +1,7 @@
 export default function userReducer (
 	state = {
     currentUser: null,
+		currentlyViewedUser: null,
     summonerEncryptedId: null,
 	},
   action
