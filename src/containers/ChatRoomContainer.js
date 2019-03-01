@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ChatRoomList from '../components/ChatRoomList';
 import { connect } from 'react-redux'
-import { allChatrooms, selectedChatroom } from "../actions/chatroomActions"
+import { allChatrooms, currentChatroom } from "../actions/chatroomActions"
 import { List } from 'semantic-ui-react'
 import { withRouter } from 'react-router-dom'
 
@@ -12,11 +12,6 @@ class ChatRoomContainer extends Component {
     .then(res => res.json())
     .then(response => {
       this.props.allChatrooms(response)
-      // let token = localStorage.getItem("chatroomToken")
-      // if (token) {
-      //   const foundChatroom = this.props.chatrooms.find(chatroom => chatroom.id === parseInt(token))
-      //   this.props.selectedChatroom(foundChatroom)
-      // }
     })
   }
 
@@ -46,8 +41,8 @@ class ChatRoomContainer extends Component {
       if (!response.user_id) {
         alert(response.messages)
       } else {
-        localStorage.setItem("chatroomToken", chatroom.id)
-        this.props.selectedChatroom(chatroom)
+        // localStorage.setItem("chatroomToken", chatroom.id)
+        this.props.currentChatroom(chatroom)
         this.props.history.push(`/chatrooms/${chatroom.id}`)
       }
     })
@@ -74,4 +69,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, { allChatrooms, selectedChatroom })(ChatRoomContainer));
+export default withRouter(connect(mapStateToProps, { allChatrooms, currentChatroom })(ChatRoomContainer));

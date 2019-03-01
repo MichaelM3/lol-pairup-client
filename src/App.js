@@ -113,6 +113,7 @@ class App extends Component {
             exact path="/chatrooms/:id"
             render={(routerProps) => <ChatroomShow
               selectedChatroom={this.props.selectedChatroom}
+              {...routerProps}
             />}
           />
           <Route

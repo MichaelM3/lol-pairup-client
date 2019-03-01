@@ -7,15 +7,18 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import rootReducer from './reducers/rootReducer.js';
 import { BrowserRouter as Router } from 'react-router-dom'
+import { ActionCableProvider } from 'react-actioncable-provider'
 
 const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 ReactDOM.render(
-  <Router>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </Router>,
+  <ActionCableProvider url="ws://localhost:3000/cable">
+    <Router>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </Router>
+  </ActionCableProvider>,
   document.getElementById('root')
 );
 
