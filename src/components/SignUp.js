@@ -18,6 +18,12 @@ const SignUp = (props) => {
           name="signUpFormPassword"
           placeholder="Password"
         />
+        <input
+          onChange={props.handleFormInputs}
+          type="text"
+          name="signUpFormSummonerName"
+          placeholder="Summoner Name"
+        />
         <input type="Submit"/>
       </form>
     </>

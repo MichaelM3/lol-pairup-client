@@ -2,19 +2,17 @@ import React, { Component } from 'react';
 import UserProfile from '../components/UserProfile';
 import { connect } from 'react-redux'
 import { allUsers } from "../actions/userActions"
+import { Card } from 'semantic-ui-react'
 
 class UserContainer extends Component {
 
-  clickHandler = () => {
-    this.props.increment()
-    console.log(this.props.someNumber);
-  }
+  
 
   render() {
     return (
-      <>
-        <button onClick={this.clickHandler}>+</button>
-      </>
+      <Card.Group itemsPerRow={6}>
+
+      </Card.Group>
     )
   }
 
@@ -22,9 +20,11 @@ class UserContainer extends Component {
 
 const mapStateToProps = state => {
   return {
-    users: state.user.users,
-    someNumber: state.user.someNumber
+    currentUser: state.user.currentUser,
+    currentlyViewedUser: state.user.currentlyViewedUser
   }
 }
 
 export default connect(mapStateToProps, { allUsers })(UserContainer);
+
+// <Card raised image={'https://static.thenounproject.com/png/50320-200.png'} />

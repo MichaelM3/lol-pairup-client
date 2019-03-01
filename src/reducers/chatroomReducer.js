@@ -2,13 +2,19 @@ export default function chatroomReducer (
 	state = {
     chatrooms: [],
     selectedChatroom: null,
-    selectedChatroomMessages: [],
+		chatroomMessages: [],
 	},
   action
 ) {
 	switch (action.type) {
     case 'ALL_CHATROOMS':
-      return ({ chatrooms: state.chatrooms })
+      return ({ ...state, chatrooms: action.payload })
+		case 'CURRENT_CHATROOM':
+			return ({ ...state, selectedChatroom: action.payload })
+		case 'CHATROOM_ALL_MESSAGES':
+			return ({ ...state, chatroomMessages: action.payload })
+		case 'NEW_MESSAGE':
+			return ({ ...state, selectedChatroom: {...state.selectedChatroom, messages: [...state.selectedChatroom.messages, action.payload]} })
     default:
       return state
   }

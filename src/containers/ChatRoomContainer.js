@@ -1,23 +1,72 @@
 import React, { Component } from 'react';
-import ChatRoom from '../components/ChatRoom.js';
+import ChatRoomList from '../components/ChatRoomList';
 import { connect } from 'react-redux'
-import { allChatrooms } from "../actions/chatroomActions"
+import { allChatrooms, currentChatroom } from "../actions/chatroomActions"
+import { List } from 'semantic-ui-react'
+import { withRouter } from 'react-router-dom'
 
 class ChatRoomContainer extends Component {
 
+  componentDidMount() {
+    fetch('http://localhost:3000/api/v1/chatrooms')
+    .then(res => res.json())
+    .then(response => {
+      this.props.allChatrooms(response)
+    })
+  }
+
+  displayChatrooms = () => {
+    return this.props.chatrooms.map(chatroom => {
+      return <ChatRoomList key={chatroom.id}
+        chatroom={chatroom}
+        handleJoinChatroomClick={this.handleJoinChatroomClick}
+      />
+    })
+  }
+
+  handleJoinChatroomClick = (chatroom) => {
+    fetch(`http://localhost:3000/api/v1/chatroom_users`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        user_id: this.props.currentUser.id,
+        chatroom_id: chatroom.id
+      })
+    })
+    .then(r => r.json())
+    .then(response => {
+      if (!response.user_id) {
+        alert(response.messages)
+      } else {
+        // localStorage.setItem("chatroomToken", chatroom.id)
+        this.props.currentChatroom(chatroom)
+        this.props.history.push(`/chatrooms/${chatroom.id}`)
+      }
+    })
+  }
+
   render() {
     return (
-      <>
-        <ChatRoom />
-      </>
+      <div>
+        { this.props.chatrooms &&
+          <List size='huge'>
+            {this.displayChatrooms()}
+          </List>
+        }
+      </div>
     )
   }
 }
 
 const mapStateToProps = state => {
   return {
+    currentUser: state.user.currentUser,
     chatrooms: state.chatroom.chatrooms,
+    selectedChatroom: state.chatroom.selectedChatroom
   }
 }
 
-export default connect(mapStateToProps, { allChatrooms })(ChatRoomContainer);
+export default withRouter(connect(mapStateToProps, { allChatrooms, currentChatroom })(ChatRoomContainer));
