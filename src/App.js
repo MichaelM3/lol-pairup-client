@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import Nav from './components/Nav';
-import ChatRoomContainer from './containers/ChatRoomContainer';
-import UserContainer from './containers/UserContainer';
 import { Switch, Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { login, logout } from './actions/userActions'
+import Nav from './components/Nav';
+import UserProfileContainer from './components/UserProfileContainer'
+import ChatRoomContainer from './containers/ChatRoomContainer';
+import UserContainer from './containers/UserContainer';
+import ChatroomShow from './components/ChatroomShow'
 import SignUp from './components/SignUp';
 import LogIn from './components/LogIn';
-import UserProfile from './components/UserProfile'
-import ChatroomShow from './components/ChatroomShow'
 
 class App extends Component {
 
@@ -95,7 +95,7 @@ class App extends Component {
       } else {
         localStorage.setItem("token", response.token)
         this.props.login(response.user)
-        this.props.history.push(`/users/${response.user.username}`)
+        this.props.history.push(`/users/${response.user.id}`)
       }
     })
   }
@@ -119,6 +119,12 @@ class App extends Component {
           <Route
             exact path="/users"
             component={UserContainer}
+          />
+          <Route
+            exact path="/users/:id"
+            render={(routerProps) => <UserProfileContainer
+              {...routerProps}
+            />}
           />
           <Route
             path="/login"
