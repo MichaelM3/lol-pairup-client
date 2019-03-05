@@ -21,7 +21,9 @@ const Nav = props => {
         :
         <Menu.Menu position="right">
           <Menu.Item>
-            {`Welcome, ${props.currentUser.username}!`}
+            <Link to={`/users/${props.currentUser.id}`}>
+              {`Welcome ${props.currentUser.username}! Click here to view profile`}
+            </Link>
           </Menu.Item>
           <Menu.Item onClick={props.logout}>
             Log out

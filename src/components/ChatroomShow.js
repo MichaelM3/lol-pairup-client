@@ -20,7 +20,6 @@ class ChatroomShow extends React.Component {
       .then(response => {
         this.props.currentChatroom(response)
         this.props.chatroomAllMessages(response.messages)
-        console.log(this.props.chatroom);
       })
     }
   }

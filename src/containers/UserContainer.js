@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import UserProfile from '../components/UserProfile';
 import { connect } from 'react-redux'
 import { allUsers } from "../actions/userActions"
 import { Card } from 'semantic-ui-react'
 
 class UserContainer extends Component {
 
-  
+
 
   render() {
     return (
