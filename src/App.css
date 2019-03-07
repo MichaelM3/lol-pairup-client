@@ -113,3 +113,10 @@
 .chatroom-list {
   background-image: url("https://am-a.akamaihd.net/image?f=https%3A%2F%2Funiverse-meeps.leagueoflegends.com%2Fv1%2Fassets%2Fimages%2Ffactions%2Fimage-gallery%2Fdemacia-templelightbringers.jpg&resize=:1200");
 }
+
+.chatroom-list {
+  color: white;
+  /* mix-blend-mode: luminosity; */
+  font: 20px cursive;
+  text-align: center
+}

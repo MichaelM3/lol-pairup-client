@@ -52,7 +52,7 @@ class ChatRoomContainer extends Component {
     return (
       <div className="chatroom-list" style={{ height: "100%", marginRight: "350px" }}>
         { this.props.chatrooms &&
-          <List size='huge'>
+          <List className="chatroom-name" size='huge'>
             {this.displayChatrooms()}
           </List>
         }

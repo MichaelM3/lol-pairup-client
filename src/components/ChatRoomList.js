@@ -5,9 +5,15 @@ const ChatRoomList = (props) => {
   const totalUsers = props.chatroom.users.length
 
   return (
-    <List.Item style={{borderStyle: "solid"}}>
+    <List.Item>
       <List.Content>
-        <List.Header>{props.chatroom.name}</List.Header>
+        <List.Header style={{
+          color: "white",
+          font: "900 5vmin/5vh cookie, cursive",
+          textAlign: "center" }}
+        >
+          {props.chatroom.name}
+        </List.Header>
         Capacity: {totalUsers}/{props.chatroom.capacity}
       </List.Content>
       <List.Content align="right">

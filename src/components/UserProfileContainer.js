@@ -75,26 +75,29 @@ class UserProfileContainer extends Component {
   }
 
   handleAddChampion = (championObj) => {
-    // console.log(championObj)
-    // console.log(this.props.currentUser)
-    fetch(`http://localhost:3000/champion_users`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify({
-        champion_user: {
-          user_id: this.props.currentUser.id,
-          champion_id: championObj.id
-        }
+    let foundChamp = this.props.currentUser.champions.find(champion => {
+      return champion.id === championObj.id
+    })
+    if (!foundChamp){
+      fetch(`http://localhost:3000/champion_users`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          champion_user: {
+            user_id: this.props.currentUser.id,
+            champion_id: championObj.id
+          }
+        })
       })
-    })
-    .then(r => r.json())
-    .then(response => {
-      this.props.addChampionToUser(championObj)
-      this.fetchViewedProfile()
-    })
+      .then(r => r.json())
+      .then(response => {
+        this.props.addChampionToUser(championObj)
+        this.fetchViewedProfile()
+      })
+    }
   }
 
   handleForAddingOrRemovingFriend = () => {

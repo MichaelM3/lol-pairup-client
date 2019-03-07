@@ -1,5 +1,5 @@
 import React from 'react'
-import { Comment, Header, Menu } from 'semantic-ui-react'
+import { Comment, Menu } from 'semantic-ui-react'
 import '../App.css'
 import Message from './Message'
 import MessageForm from './MessageForm'
@@ -48,7 +48,7 @@ class ChatroomShow extends React.Component {
   }
 
   displayAllMessages = () => {
-    const reversedMessages = this.props.chatroom.messages //.reverse()
+    const reversedMessages = this.props.chatroom.messages
     return reversedMessages.map(message => {
       let foundUser = this.props.chatroom.users.find(user => user.id === message.user_id)
       return <Message key={message.id} user={foundUser} message={message} />
@@ -65,7 +65,8 @@ class ChatroomShow extends React.Component {
     return this.props.chatroom.users.map(user => {
       return (
         <Menu.Item align="center" href={`/users/${user.id}`} key={user.id} target='_blank'>
-          {user.username}
+          <h3>{user.username}</h3>
+          <h3>Rank: {user.rank}</h3>
         </Menu.Item>
       )
     })
