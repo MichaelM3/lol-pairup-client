@@ -1,5 +1,5 @@
 import React from 'react'
-import { Comment, Header } from 'semantic-ui-react'
+import { Comment, Header, Menu } from 'semantic-ui-react'
 import '../App.css'
 import Message from './Message'
 import MessageForm from './MessageForm'
@@ -48,7 +48,8 @@ class ChatroomShow extends React.Component {
   }
 
   displayAllMessages = () => {
-    return this.props.chatroom.messages.map(message => {
+    const reversedMessages = this.props.chatroom.messages //.reverse()
+    return reversedMessages.map(message => {
       let foundUser = this.props.chatroom.users.find(user => user.id === message.user_id)
       return <Message key={message.id} user={foundUser} message={message} />
     })
@@ -60,21 +61,38 @@ class ChatroomShow extends React.Component {
     }
   }
 
+  displayAllUsers = () => {
+    return this.props.chatroom.users.map(user => {
+      return (
+        <Menu.Item align="center" href={`/users/${user.id}`} key={user.id} target='_blank'>
+          {user.username}
+        </Menu.Item>
+      )
+    })
+  }
+
   render() {
     return (
-      <div>
+      <div className="chatroom-container" style={{ marginRight: "150px" }}>
         <ActionCableConsumer
           channel={{ channel: 'ChatroomChannel', id: this.props.match.params.id}}
           onReceived={this.handleSocketResponse}
         />
         { this.props.chatroom &&
-          <Comment.Group>
-
-            <Header as='h1' dividing>
-              {this.props.selectedChatroom.name}
-            </Header>
-            {this.displayAllMessages()}
-          </Comment.Group>
+          <div style={{display: "inline-flex"}}>
+            <h1 className="chatroom">
+              {this.props.chatroom.name}
+            </h1>
+            <Comment.Group style={{ overflowX: "auto", height: "73vh"}}>
+              {this.displayAllMessages()}
+            </Comment.Group>
+            <div style={{ overflowX: "auto", display: "inline-block", verticalAlign: "top", width: "20vw", height: "73vh", paddingLeft: "13%"}}>
+              <h1 className="chatroom" align="center">Users</h1>
+              <Menu align="center" vertical>
+                {this.displayAllUsers()}
+              </Menu>
+            </div>
+          </div>
         }
         <MessageForm handleMessageSubmit={this.handleMessageSubmit} handleMessageInput={this.handleMessageInput} />
       </div>

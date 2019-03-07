@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import ChatRoomList from '../components/ChatRoomList';
 import { connect } from 'react-redux'
@@ -41,7 +42,6 @@ class ChatRoomContainer extends Component {
       if (!response.user_id) {
         alert(response.messages)
       } else {
-        // localStorage.setItem("chatroomToken", chatroom.id)
         this.props.currentChatroom(chatroom)
         this.props.history.push(`/chatrooms/${chatroom.id}`)
       }
@@ -50,7 +50,7 @@ class ChatRoomContainer extends Component {
 
   render() {
     return (
-      <div>
+      <div className="chatroom-list" style={{ height: "100%", marginRight: "350px" }}>
         { this.props.chatrooms &&
           <List size='huge'>
             {this.displayChatrooms()}

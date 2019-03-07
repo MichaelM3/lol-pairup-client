@@ -6,7 +6,7 @@ const Nav = props => {
 
   return (
     <Menu>
-      <Link to="/chatrooms" className="items">
+      <Link to="/chatrooms" style={{fontFamily: "fantasy", fontSize: "30px", marginTop: "1%"}}>
         Chatrooms
       </Link>
       { !props.currentUser ?

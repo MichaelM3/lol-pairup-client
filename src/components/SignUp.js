@@ -1,26 +1,27 @@
 import React from 'react';
+import { Form, Input, Button, Header } from 'semantic-ui-react'
 
 const SignUp = (props) => {
 
   return (
-    <>
-      <label>SignUp</label>
-      <form onSubmit={props.handleSignUpSubmit}>
-        <input
+    <div align="center" className="signup">
+      <Header style={{paddingRight: "5%", fontFamily: "fantasy"}}>SignUp</Header>
+      <Form onSubmit={props.handleSignUpSubmit}>
+        <Input
           onChange={props.handleFormInputs}
           type="text"
           name="signUpFormName"
           placeholder="Username"
         />
-        <input
+        <Input
           onChange={props.handleFormInputs}
           type="password"
           name="signUpFormPassword"
           placeholder="Password"
         />
-        <button type="submit">Submit</button>
-      </form>
-    </>
+        <Button type="submit">Submit</Button>
+      </Form>
+    </div>
   )
 
 }
