@@ -15,7 +15,7 @@ class ChatroomShow extends React.Component {
 
   componentDidMount() {
     if (this.props.match.params.id) {
-      fetch(`http://localhost:3000/api/v1/chatrooms/${this.props.match.params.id}`)
+      fetch(`https://lol-pairup-backend.herokuapp.com/api/v1/chatrooms/${this.props.match.params.id}`)
       .then(r => r.json())
       .then(response => {
         this.props.currentChatroom(response)
@@ -26,7 +26,7 @@ class ChatroomShow extends React.Component {
 
   handleMessageSubmit = (event) => {
     event.preventDefault()
-    fetch(`http://localhost:3000/api/v1/messages`, {
+    fetch(`https://lol-pairup-backend.herokuapp.com/api/v1/messages`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

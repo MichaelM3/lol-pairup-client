@@ -15,7 +15,7 @@ class UserProfileContainer extends Component {
 
   fetchViewedProfile = () => {
     if (this.props.match.params.id) {
-      fetch(`http://localhost:3000/api/v1/users/${this.props.match.params.id}`)
+      fetch(`https://lol-pairup-backend.herokuapp.com/api/v1/users/${this.props.match.params.id}`)
       .then(r => r.json())
       .then(response => {
         this.props.viewedUser(response)
@@ -43,7 +43,7 @@ class UserProfileContainer extends Component {
 
   handleLeagueInfoSubmit = (event) => {
     event.preventDefault()
-    fetch(`http://localhost:3000/api/v1/users/${this.props.currentUser.id}`, {
+    fetch(`https://lol-pairup-backend.herokuapp.com/api/v1/users/${this.props.currentUser.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -79,7 +79,7 @@ class UserProfileContainer extends Component {
       return champion.id === championObj.id
     })
     if (!foundChamp){
-      fetch(`http://localhost:3000/champion_users`, {
+      fetch(`https://lol-pairup-backend.herokuapp.com/champion_users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -105,13 +105,13 @@ class UserProfileContainer extends Component {
       let foundFriendship = this.props.currentUser.friendships.find(friendship => {
         return (friendship.user_id === this.props.currentUser.id) && (friendship.friend_id === this.props.currentlyViewedUser.id)
       })
-      fetch(`http://localhost:3000/api/v1/friendships/${foundFriendship.id}`, { method: "DELETE" })
+      fetch(`https://lol-pairup-backend.herokuapp.com/api/v1/friendships/${foundFriendship.id}`, { method: "DELETE" })
       .then(
         this.props.removeFriend(this.props.currentlyViewedUser),
         this.props.removeFriendshipJoin(foundFriendship)
       )
     } else {
-      fetch('http://localhost:3000/api/v1/friendships', {
+      fetch('https://lol-pairup-backend.herokuapp.com/api/v1/friendships', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

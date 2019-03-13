@@ -27,7 +27,7 @@ class App extends Component {
   componentDidMount() {
     let token = localStorage.getItem("token")
     if (token) {
-      fetch(`http://localhost:3000/api/v1/current_user`, {
+      fetch(`https://lol-pairup-backend.herokuapp.com/api/v1/current_user`, {
         headers: {
           "Authorization": token
         }
@@ -54,7 +54,7 @@ class App extends Component {
 
   handleSignUpSubmit = (event) => {
     event.preventDefault()
-    fetch('http://localhost:3000/api/v1/users', {
+    fetch('https://lol-pairup-backend.herokuapp.com/api/v1/users', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -82,7 +82,7 @@ class App extends Component {
 
   handleLogInSubmit = (event) => {
     event.preventDefault()
-    fetch("http://localhost:3000/api/v1/login", {
+    fetch("https://lol-pairup-backend.herokuapp.com/api/v1/login", {
       method: "POST",
       headers: {
         'Content-Type': "application/json",
@@ -106,7 +106,7 @@ class App extends Component {
   }
 
   displayChampionList() {
-    fetch("http://localhost:3000/champions")
+    fetch("https://lol-pairup-backend.herokuapp.com/champions")
     .then(r => r.json())
     .then(response => {
       this.props.allChampions(response)
