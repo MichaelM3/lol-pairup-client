@@ -12,7 +12,7 @@ import { ActionCableProvider } from 'react-actioncable-provider'
 const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 ReactDOM.render(
-  <ActionCableProvider url="ws://localhost:3000/cable">
+  <ActionCableProvider url="ws://lol-pairup-backend.herokuapp.com/cable">
     <Router>
       <Provider store={store}>
         <App />
