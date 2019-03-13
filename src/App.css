@@ -2,42 +2,13 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .container {
   border: 2px solid #000;
   background-color: #f1f1f1;
   border-radius: 30px;
   padding: 10px;
   margin: 10px 0;
+  word-wrap: break-word;
 }
 
 /* Darker chat container */
@@ -79,4 +50,73 @@
 .time-left {
   float: left;
   color: #999;
+}
+
+.signup {
+  padding: 8%;
+  padding-left: 6%;
+  font-family: fantasy;
+  font-size: 50px;
+  height: 100%;
+  background-image: url("https://am-a.akamaihd.net/image?f=https%3A%2F%2Funiverse-meeps.leagueoflegends.com%2Fv1%2Fassets%2Fimages%2Ffactions%2Fimage-gallery%2Fdemacia-grandplaza.jpg&resize=:1200");
+}
+
+.login {
+  padding: 8%;
+  padding-left: 6%;
+  font-family: fantasy;
+  font-size: 50px;
+  height: 100%;
+  background-size: 114%;
+  background-repeat: no-repeat;
+  background-image: url("https://am-a.akamaihd.net/image?f=https%3A%2F%2Funiverse-meeps.leagueoflegends.com%2Fv1%2Fassets%2Fimages%2Ffactions%2Fimage-gallery%2Fshurima-risen.jpg&resize=:1200");
+}
+
+.profile {
+  margin-right: 150px;
+  background-image: url("https://am-a.akamaihd.net/image?f=https%3A%2F%2Funiverse-meeps.leagueoflegends.com%2Fv1%2Fassets%2Fimages%2Ffactions%2Fimage-gallery%2Ffreljord-cavernshowling.jpg&resize=:1200");
+  background-: 100%
+}
+
+#h1-test {
+    color: white;
+    mix-blend-mode: difference;
+    font: 900 15vmin/15vh cookie, cursive;
+    text-align: center
+}
+
+.profile-info {
+  color: gold;
+  mix-blend-mode: difference;
+  font: 900 6vmin/6vh cookie, cursive;
+  text-align: center
+}
+
+.top-champs {
+  color: white;
+  mix-blend-mode: difference;
+  font: 900 3vmin/3vh cookie, cursive;
+  text-align: center
+}
+
+.chatroom-container {
+  background-image: url("https://am-a.akamaihd.net/image?f=https%3A%2F%2Funiverse-meeps.leagueoflegends.com%2Fv1%2Fassets%2Fimages%2Ffactions%2Fimage-gallery%2Fdemacia-hallvalor.jpg&resize=:1200");
+}
+
+.chatroom {
+  color: white;
+  mix-blend-mode: difference;
+  font: 900 5vmin/5vh cookie, cursive;
+  text-align: center
+}
+
+.chatroom-list {
+  background-image: url("https://am-a.akamaihd.net/image?f=https%3A%2F%2Funiverse-meeps.leagueoflegends.com%2Fv1%2Fassets%2Fimages%2Ffactions%2Fimage-gallery%2Fdemacia-templelightbringers.jpg&resize=:1200");
+}
+
+.chatroom-list {
+  color: white;
+  /* mix-blend-mode: luminosity; */
+  font: 20px cursive;
+  text-align: center
 }

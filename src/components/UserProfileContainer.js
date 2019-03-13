@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { viewedUser, changeLeagueAccount } from '../actions/userActions'
+import { viewedUser, changeLeagueAccount, addChampionToUser, addFriend, addFriendshipJoin, removeFriend ,removeFriendshipJoin } from '../actions/userActions'
 import UserProfile from '../components/UserProfile'
 import UserProfileForm from '../components/UserProfileForm'
 import ChampionList from '../components/ChampionList'
-import { Grid, Button, Modal, Header, Icon } from 'semantic-ui-react'
-import { allChampions } from '../actions/championActions'
+import { Grid, Button, Modal, Header } from 'semantic-ui-react'
 
 class UserProfileContainer extends Component {
 
   state = {
     summonerName: "",
+    summonerInfoForm: false,
   }
 
   fetchViewedProfile = () => {
@@ -25,20 +25,15 @@ class UserProfileContainer extends Component {
 
   componentDidMount() {
     this.fetchViewedProfile()
-    this.displayChampionList()
   }
 
-  // componentDidUpdate() {
-  //   console.log(this.props.currentlyViewedUser)
-  //   let myBoolean=(parseInt(this.props.match.params.id) !== this.props.currentlyViewedUser.id)
-    // console.log(myBoolean)
-    // if (myBoolean) {
-    //   console.log("Hello!")
-    //   // this.fetchViewedProfile()
-    //   // this.displayChampionList()
-    // }
-    // console.log(this.props.match.params.id !== this.props.currentlyViewedUser.id)
-  // }
+  componentDidUpdate(prevProps) {
+    if(this.props.match.params) {
+      if (this.props.match.params.id !== prevProps.match.params.id) {
+        this.fetchViewedProfile()
+      }
+    }
+  }
 
   leagueAccountInputs = (event) => {
     this.setState({
@@ -56,25 +51,20 @@ class UserProfileContainer extends Component {
       },
       body: JSON.stringify({
         user: {
-          league_account: this.state.summonerName
+          league_account: this.state.summonerName,
+          preffered_role: this.props.currentUser.preffered_role,
+          off_role: this.props.currentUser.off_role
         }
       })
     })
     .then(r => r.json())
     .then(response => {
-      if (response.errors) {
+      if (response.error) {
         alert("Account does not exist or is taken")
       } else {
         this.props.changeLeagueAccount(response.league_account)
+        this.fetchViewedProfile()
       }
-    })
-  }
-
-  displayChampionList = () => {
-    fetch("http://localhost:3000/champions")
-    .then(r => r.json())
-    .then(response => {
-      this.props.allChampions(response)
     })
   }
 
@@ -85,27 +75,85 @@ class UserProfileContainer extends Component {
   }
 
   handleAddChampion = (championObj) => {
-    console.log(championObj)
+    let foundChamp = this.props.currentUser.champions.find(champion => {
+      return champion.id === championObj.id
+    })
+    if (!foundChamp){
+      fetch(`http://localhost:3000/champion_users`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          champion_user: {
+            user_id: this.props.currentUser.id,
+            champion_id: championObj.id
+          }
+        })
+      })
+      .then(r => r.json())
+      .then(response => {
+        this.props.addChampionToUser(championObj)
+        this.fetchViewedProfile()
+      })
+    }
+  }
+
+  handleForAddingOrRemovingFriend = () => {
+    if (this.props.currentUser.friends.find(friend => friend.id === this.props.currentlyViewedUser.id)) {
+      let foundFriendship = this.props.currentUser.friendships.find(friendship => {
+        return (friendship.user_id === this.props.currentUser.id) && (friendship.friend_id === this.props.currentlyViewedUser.id)
+      })
+      fetch(`http://localhost:3000/api/v1/friendships/${foundFriendship.id}`, { method: "DELETE" })
+      .then(
+        this.props.removeFriend(this.props.currentlyViewedUser),
+        this.props.removeFriendshipJoin(foundFriendship)
+      )
+    } else {
+      fetch('http://localhost:3000/api/v1/friendships', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          user_id: this.props.currentUser.id,
+          friend_id: this.props.currentlyViewedUser.id
+        })
+      })
+      .then(r => r.json())
+      .then(response => {
+        this.props.addFriend(this.props.currentlyViewedUser)
+        this.props.addFriendshipJoin(response)
+      })
+    }
+  }
+
+  handleSummonerInfoButton = () => {
+    this.setState({ summonerInfoForm: !this.state.summonerInfoForm })
   }
 
   render() {
-    console.log(this.props.currentUser);
+    // console.log("Current user is:",this.props.currentUser, "Viewed user is:",this.props.currentlyViewedUser)
     return (
-      <div>
+      <div className="profile" style={{height: "100%"}}>
         { (this.props.currentlyViewedUser && this.props.currentUser) &&
           <div>
             { (this.props.currentlyViewedUser.id === this.props.currentUser.id) ?
               <div>
+                <UserProfileForm
+                handleSummonerInfoButton={this.handleSummonerInfoButton}
+                summonerInfoForm={this.state.summonerInfoForm}
+                currentUser={this.props.currentUser}
+                handleLeagueInfoSubmit={this.handleLeagueInfoSubmit}
+                leagueAccountInputs={this.leagueAccountInputs}
+                />
                 <UserProfile
                   currentUser={this.props.currentUser}
                   currentlyViewedUser={this.props.currentlyViewedUser}
                 />
-                <UserProfileForm
-                  currentUser={this.props.currentUser}
-                  handleLeagueInfoSubmit={this.handleLeagueInfoSubmit}
-                  leagueAccountInputs={this.leagueAccountInputs}
-                />
-                <Modal trigger={<Button>Select Top 3 Champions</Button>}>
+                <Modal trigger={<Button style={{ verticalAlign: "bottom", marginBottom: "3%", marginLeft: "-56%" }}>Select a champion to display</Button>}>
                   <Modal.Content image>
                       <Header>Champion List</Header>
                       <Grid>
@@ -114,18 +162,20 @@ class UserProfileContainer extends Component {
                         </Grid.Row>
                       </Grid>
                   </Modal.Content>
-                  <Modal.Actions>
-                    <Button primary>
-                      Proceed <Icon name='right chevron' />
-                    </Button>
-                  </Modal.Actions>
                 </Modal>
               </div>
               :
-              <UserProfile
-                currentUser={this.props.currentUser}
-                currentlyViewedUser={this.props.currentlyViewedUser}
-              />
+              <div>
+                { (!this.props.currentUser.friends.find(friend => friend.id === this.props.currentlyViewedUser.id)) ?
+                  <Button onClick={this.handleForAddingOrRemovingFriend} color="orange">Add Friend</Button>
+                  :
+                  <Button onClick={this.handleForAddingOrRemovingFriend} color="orange">Remove Friend</Button>
+                }
+                <UserProfile
+                  currentUser={this.props.currentUser}
+                  currentlyViewedUser={this.props.currentlyViewedUser}
+                />
+              </div>
             }
           </div>
         }
@@ -143,4 +193,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { viewedUser, changeLeagueAccount, allChampions })(UserProfileContainer);
+export default connect(mapStateToProps, { viewedUser, changeLeagueAccount, addChampionToUser, addFriend, addFriendshipJoin, removeFriend ,removeFriendshipJoin })(UserProfileContainer);

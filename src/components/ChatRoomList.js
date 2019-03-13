@@ -6,12 +6,18 @@ const ChatRoomList = (props) => {
 
   return (
     <List.Item>
-      <List.Content floated='right'>
-        <Button onClick={() => props.handleJoinChatroomClick(props.chatroom)}>Join</Button>
-      </List.Content>
       <List.Content>
-        <List.Header>{props.chatroom.name}</List.Header>
+        <List.Header style={{
+          color: "white",
+          font: "900 5vmin/5vh cookie, cursive",
+          textAlign: "center" }}
+        >
+          {props.chatroom.name}
+        </List.Header>
         Capacity: {totalUsers}/{props.chatroom.capacity}
+      </List.Content>
+      <List.Content align="right">
+      <Button onClick={() => props.handleJoinChatroomClick(props.chatroom)}>Join</Button>
       </List.Content>
     </List.Item>
   )

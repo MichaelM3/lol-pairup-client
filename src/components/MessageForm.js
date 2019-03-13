@@ -1,16 +1,18 @@
 import React from 'react'
-import { Form } from 'semantic-ui-react'
+import { Form, Input } from 'semantic-ui-react'
 
 const MessageForm = (props) => {
   return (
     <Form onSubmit={props.handleMessageSubmit}>
-      <Form.TextArea
+      <Input
+        fluid
+        size='massive'
         onChange={props.handleMessageInput}
         type="text"
         name="messageForm"
         placeholder="Message Content"
       />
-      <Form.Button>send</Form.Button>
+      <Form.Button fluid>send</Form.Button>
     </Form>
   )
 }
