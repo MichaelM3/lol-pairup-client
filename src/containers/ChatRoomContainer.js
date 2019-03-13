@@ -9,7 +9,7 @@ import { withRouter } from 'react-router-dom'
 class ChatRoomContainer extends Component {
 
   componentDidMount() {
-    fetch('http://localhost:3000/api/v1/chatrooms')
+    fetch('https://lol-pairup-backend.herokuapp.com/api/v1/chatrooms')
     .then(res => res.json())
     .then(response => {
       this.props.allChatrooms(response)
@@ -26,7 +26,7 @@ class ChatRoomContainer extends Component {
   }
 
   handleJoinChatroomClick = (chatroom) => {
-    fetch(`http://localhost:3000/api/v1/chatroom_users`, {
+    fetch(`https://lol-pairup-backend.herokuapp.com/api/v1/chatroom_users`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
