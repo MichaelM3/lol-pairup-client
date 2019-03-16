@@ -55,11 +55,11 @@ class ChatroomShow extends React.Component {
     })
   }
 
-  handleSocketResponse = (msgObj) => {
-    if (!this.props.chatroom.messages.find(message => message.id === msgObj.message.id)) {
-      this.props.newMessage(msgObj.message)
-    }
-  }
+  // handleSocketResponse = (msgObj) => {
+  //   if (!this.props.chatroom.messages.find(message => message.id === msgObj.message.id)) {
+  //     this.props.newMessage(msgObj.message)
+  //   }
+  // }
 
   displayAllUsers = () => {
     return this.props.chatroom.users.map(user => {
@@ -77,7 +77,7 @@ class ChatroomShow extends React.Component {
       <div className="chatroom-container" style={{ marginRight: "150px" }}>
         <ActionCableConsumer
           channel={{ channel: 'ChatroomChannel', id: this.props.match.params.id}}
-          onReceived={this.handleSocketResponse}
+          onReceived={this.props.newMessage(msgObj.message)}
         />
         { this.props.chatroom &&
           <div style={{display: "inline-flex"}}>
