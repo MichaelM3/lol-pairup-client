@@ -5,6 +5,7 @@ import UserProfile from '../components/UserProfile'
 import UserProfileForm from '../components/UserProfileForm'
 import ChampionList from '../components/ChampionList'
 import { Grid, Button, Modal, Header } from 'semantic-ui-react'
+import { ENDPOINT_URL } from '../adapter'
 
 class UserProfileContainer extends Component {
 
@@ -15,7 +16,7 @@ class UserProfileContainer extends Component {
 
   fetchViewedProfile = () => {
     if (this.props.match.params.id) {
-      fetch(`https://lol-pairup-backend.herokuapp.com/api/v1/users/${this.props.match.params.id}`)
+      fetch(`${ENDPOINT_URL}/api/v1/users/${this.props.match.params.id}`)
       .then(r => r.json())
       .then(response => {
         this.props.viewedUser(response)
@@ -43,7 +44,7 @@ class UserProfileContainer extends Component {
 
   handleLeagueInfoSubmit = (event) => {
     event.preventDefault()
-    fetch(`https://lol-pairup-backend.herokuapp.com/api/v1/users/${this.props.currentUser.id}`, {
+    fetch(`${ENDPOINT_URL}/api/v1/users/${this.props.currentUser.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -79,7 +80,7 @@ class UserProfileContainer extends Component {
       return champion.id === championObj.id
     })
     if (!foundChamp){
-      fetch(`https://lol-pairup-backend.herokuapp.com/champion_users`, {
+      fetch(`${ENDPOINT_URL}/champion_users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -105,13 +106,13 @@ class UserProfileContainer extends Component {
       let foundFriendship = this.props.currentUser.friendships.find(friendship => {
         return (friendship.user_id === this.props.currentUser.id) && (friendship.friend_id === this.props.currentlyViewedUser.id)
       })
-      fetch(`https://lol-pairup-backend.herokuapp.com/api/v1/friendships/${foundFriendship.id}`, { method: "DELETE" })
+      fetch(`${ENDPOINT_URL}/api/v1/friendships/${foundFriendship.id}`, { method: "DELETE" })
       .then(
         this.props.removeFriend(this.props.currentlyViewedUser),
         this.props.removeFriendshipJoin(foundFriendship)
       )
     } else {
-      fetch('https://lol-pairup-backend.herokuapp.com/api/v1/friendships', {
+      fetch(`${ENDPOINT_URL}/api/v1/friendships`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -5,11 +5,12 @@ import { connect } from 'react-redux'
 import { allChatrooms, currentChatroom } from "../actions/chatroomActions"
 import { List } from 'semantic-ui-react'
 import { withRouter } from 'react-router-dom'
+import { ENDPOINT_URL } from '../adapter'
 
 class ChatRoomContainer extends Component {
 
   componentDidMount() {
-    fetch('https://lol-pairup-backend.herokuapp.com/api/v1/chatrooms')
+    fetch(`${ENDPOINT_URL}/api/v1/chatrooms`)
     .then(res => res.json())
     .then(response => {
       this.props.allChatrooms(response)
@@ -26,7 +27,7 @@ class ChatRoomContainer extends Component {
   }
 
   handleJoinChatroomClick = (chatroom) => {
-    fetch(`https://lol-pairup-backend.herokuapp.com/api/v1/chatroom_users`, {
+    fetch(`${ENDPOINT_URL}/api/v1/chatroom_users`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
