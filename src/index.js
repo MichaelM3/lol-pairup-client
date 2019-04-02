@@ -8,12 +8,12 @@ import { Provider } from 'react-redux'
 import rootReducer from './reducers/rootReducer.js';
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ActionCableProvider } from 'react-actioncable-provider'
-import { ENDPOINT_URL } from './adapter'
+import { WS_URL } from './adapter'
 
 const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 ReactDOM.render(
-  <ActionCableProvider url={`wss://${ENDPOINT_URL}/cable`}>
+  <ActionCableProvider url={`${WS_URL}`}>
     <Router>
       <Provider store={store}>
         <App />
