@@ -12,6 +12,7 @@ import SignUp from './components/SignUp';
 import LogIn from './components/LogIn';
 import FriendsList from './components/FriendsList';
 import { Icon, Menu, Segment, Sidebar } from 'semantic-ui-react'
+import { ENDPOINT_URL } from '../adapter'
 
 
 class App extends Component {
@@ -27,7 +28,7 @@ class App extends Component {
   componentDidMount() {
     let token = localStorage.getItem("token")
     if (token) {
-      fetch(`https://lol-pairup-backend.herokuapp.com/api/v1/current_user`, {
+      fetch(`${ENDPOINT_URL}/api/v1/current_user`, {
         headers: {
           "Authorization": token
         }
@@ -54,7 +55,7 @@ class App extends Component {
 
   handleSignUpSubmit = (event) => {
     event.preventDefault()
-    fetch('https://lol-pairup-backend.herokuapp.com/api/v1/users', {
+    fetch(`${ENDPOINT_URL}/api/v1/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -82,7 +83,7 @@ class App extends Component {
 
   handleLogInSubmit = (event) => {
     event.preventDefault()
-    fetch("https://lol-pairup-backend.herokuapp.com/api/v1/login", {
+    fetch(`${ENDPOINT_URL}/api/v1/login`, {
       method: "POST",
       headers: {
         'Content-Type': "application/json",
@@ -106,7 +107,7 @@ class App extends Component {
   }
 
   displayChampionList() {
-    fetch("https://lol-pairup-backend.herokuapp.com/champions")
+    fetch(`${ENDPOINT_URL}/champions`)
     .then(r => r.json())
     .then(response => {
       this.props.allChampions(response)

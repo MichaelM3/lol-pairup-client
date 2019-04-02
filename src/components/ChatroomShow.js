@@ -6,6 +6,7 @@ import MessageForm from './MessageForm'
 import { connect } from 'react-redux'
 import { currentChatroom, newMessage, chatroomAllMessages } from "../actions/chatroomActions"
 import { ActionCableConsumer } from 'react-actioncable-provider'
+import { ENDPOINT_URL } from '../adapter'
 
 class ChatroomShow extends React.Component {
 
@@ -15,7 +16,7 @@ class ChatroomShow extends React.Component {
 
   componentDidMount() {
     if (this.props.match.params.id) {
-      fetch(`https://lol-pairup-backend.herokuapp.com/api/v1/chatrooms/${this.props.match.params.id}`)
+      fetch(`${ENDPOINT_URL}/api/v1/chatrooms/${this.props.match.params.id}`)
       .then(r => r.json())
       .then(response => {
         this.props.currentChatroom(response)
@@ -26,7 +27,7 @@ class ChatroomShow extends React.Component {
 
   handleMessageSubmit = (event) => {
     event.preventDefault()
-    fetch(`https://lol-pairup-backend.herokuapp.com/api/v1/messages`, {
+    fetch(`${ENDPOINT_URL}/api/v1/messages`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
