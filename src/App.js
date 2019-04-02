@@ -12,7 +12,7 @@ import SignUp from './components/SignUp';
 import LogIn from './components/LogIn';
 import FriendsList from './components/FriendsList';
 import { Icon, Menu, Segment, Sidebar } from 'semantic-ui-react'
-import { ENDPOINT_URL } from '../adapter'
+import { ENDPOINT_URL } from './adapter'
 
 
 class App extends Component {
