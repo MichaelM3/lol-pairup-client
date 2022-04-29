@@ -1,10 +1,11 @@
 import { defineConfig } from 'vite';
 import { createHtmlPlugin } from 'vite-plugin-html';
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-    root: 'public',
+    root: 'src',
     build: {
-        outDir: './dist',
+        outDir: '../dist',
     },
     plugins: [
         createHtmlPlugin({
@@ -13,6 +14,9 @@ export default defineConfig({
                     title: 'LoL Pairup',
                 }
             }
+        }),
+        react({
+            include: "**/*.{jsx,tsx}"
         })
     ]
 })

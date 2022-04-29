@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import ChatRoomList from '../components/ChatRoomList';
 import { connect } from 'react-redux'
